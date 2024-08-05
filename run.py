@@ -74,11 +74,15 @@ def display_remaining_ships(grid):
     print(Fore.CYAN + f"Remaining ships: {num_ships}" + Style.RESET_ALL)
 
 def get_user_guess(size):
-    """Prompt user for coordinates."""
+    """Prompt user for coordinates and ensure they are not duplicates"""
     while True:
         try:
             x, y = map(int, input(f"Enter coordinates (0-{size-1})(x y): ").split())
+            if (x, y) in previous_guesses:
+                print("You already guessed that position. Try a different one.")
+                continue
             if 0 <= x < size and 0 <= y < size:
+                previous_guesses.add((x, y))
                 return x, y
             else:
                 print(f"Coordinates must be between 0 and {size-1}.")
@@ -86,8 +90,11 @@ def get_user_guess(size):
             print("Invalid input. Please enter two integers separated by a space.")
 
 def get_computer_guess(size):
-    """Generate random coordinates for computer guess."""
-    return random.randint(0, size - 1), random.randint(0, size - 1)
+    """Generate a more strategic guess for the computer"""
+    available_positions = [(x, y) for x in range(size) for y in range(size) if (x, y) not in previous_guesses]
+    if available_positions:
+        return random.choice(available_positions)
+    return random.randint(0, size - 1), random.randint(0, size - 1)    
 
 def update_grid(grid, x, y, hit):
     """Update the grid with hits or misses."""
