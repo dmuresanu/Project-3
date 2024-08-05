@@ -24,7 +24,6 @@ def display_rules():
     )
     print(rules)
 
-
 def get_grid_size():
     """Prompt user to enter the grid size."""
     while True:
@@ -37,7 +36,27 @@ def get_grid_size():
         except ValueError:
             print("Invalid input. Please enter a positive integer.")
 
-# Testing grid size input
+# battleships.py
+
+def place_ship(grid, start_x, start_y, length, direction):
+    """Place a ship on the grid if placement is valid."""
+    size = len(grid)
+    if direction == 'H':
+        if start_y + length <= size and all(grid[start_x][y] == ' ' for y in range(start_y, start_y + length)):
+            for y in range(start_y, start_y + length):
+                grid[start_x][y] = 'S'
+        else:
+            print("Ship placement out of bounds or overlap detected.")
+    elif direction == 'V':
+        if start_x + length <= size and all(grid[x][start_y] == ' ' for x in range(start_x, start_x + length)):
+            for x in range(start_x, start_x + length):
+                grid[x][start_y] = 'S'
+        else:
+            print("Ship placement out of bounds or overlap detected.")
+
+# Testing ship placement
 if __name__ == "__main__":
     size = get_grid_size()
-    print(f"Grid size: {size}")
+    grid = initialize_grid(size)
+    place_ship(grid, 1, 1, 3, 'H')
+    print_grid(grid)
