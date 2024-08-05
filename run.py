@@ -37,7 +37,7 @@ def get_grid_size():
     """Prompt the user to enter the grid size"""
     while True:
         try:
-            size = int(input("Enter grid size: ")) 
+            size = int(input("Enter grid size (5-10) ")) 
             if 5 <= size <= 10:
                 return size
             else: 
@@ -48,13 +48,23 @@ def get_grid_size():
 def place_ship(grid, start_x, start_y, lenght, direction):
     """Place ship on the grid."""
     if direction == 'H':
-        if start_y + lenght <= len(grid[0]):
+        if start_y + lenght <= len(grid[0]) and all(grid[start_x][start_y + i] == ' ' for i in range(lenght)):
             for i in range(lenght):
                 grid[start_x][start_y + 1] = 'S'
+            return True
+        else:
+            print("Ship placement overlaps or is out of bounds.")
+            return False
     elif direction == 'V':
-        if start_x + lenght <= len(grid):
-            for i in range(lenght):
+        if start_x + lenght <= len(grid) and all(grid[start_x + i][start_y] == ' ' for i in range(lenght)):
+            for i in range(lenght):   
                 grid[start_x + i][start_y] = 'S'
+            return True
+        else:
+             print("Ship placement overlaps or is out of bounds.")
+             return False      
+             print("Invalid direction. Use 'H' for horizontal or 'V' for vertical.")
+             return False               
 
 def count_ships(grid):
     """Count the number of ships in the grid"""
