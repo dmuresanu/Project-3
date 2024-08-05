@@ -1,4 +1,8 @@
 import random
+from colorama import Fore, Style, init
+
+#Initialize colorama to enable colored text output
+init()
 
 def initialize_grid(size):
     """Initialize the game grid"""
@@ -15,13 +19,13 @@ def print_grid(grid, show_ships=False, title=""):
         row_display = []
         for cell in row:
             if cell == 'S' and not show_ships:
-                row_display.append(' ') 
+                row_display.append(' ' + Style.RESET_ALL) 
             elif cell == 'S':
-                row_display.append('S')
+                row_display.append(Fore.RED + 'S' + Style.RESET_ALL)
             elif cell == 'H':  
-                row_display.append('H') 
+                row_display.append(Fore.GREEN + 'H' + Style.RESET_ALL) 
             elif cell == 'M':
-                row_display.append('M') 
+                row_display.append(Fore.YELLOW + 'M' + Style.RESET_ALL) 
             else:  
                 row_display.append(cell)  
         print(f"{i:2} " + " ".join(row_display))                           
