@@ -75,19 +75,19 @@ def display_remaining_ships(grid):
     print(Fore.CYAN + f"Remaining ships: {num_ships}" + Style.RESET_ALL)
 
 def get_user_name():
-    """Prompt user to enter their name with validation."""
+    """Prompt the user to enter their name and validate it."""
     while True:
         name = input("Enter your name: ").strip()
-        if re.match(r'^[A-Za-z ]{1,20}$', name):
+        if re.fullmatch(r'[A-Za-z ]{1,20}', name):
             return name
         else:
-            print("Invalid input. Please enter 1-20 alphabetic characters and spaces only.")
+            print("Invalid name. Please enter 1-20 alphabetic characters and spaces only.")
 
 def get_user_guess(size, previous_guesses):
     """Prompt user for coordinates and ensure they are not duplicates"""
     while True:
         try:
-            x, y = map(int, input(f"Enter your guess (row column, e.g., 3 4): ").split())
+            x, y = map(int, input(f"Enter your guess (row and column) separated by a space (e.g., 3 4): ").split())
             if (x, y) in previous_guesses:
                 print("You already guessed that position. Try a different one.")
                 continue
@@ -117,29 +117,35 @@ def check_victory(grid):
     """Check if all ships have been hit."""
     return all(cell != 'S' for row in grid for cell in row)
 
-def handle_game_over(winner):
+def handle_game_over(winner, player_name, computer_wins, player_wins):
     """Handle the end of the game and offer restart or exit options."""
-    print(f"\n{winner} wins!")
+    if winner == player_name:
+        print(Fore.GREEN + f"{player_name} wins!" + Style.RESET_ALL)
+        player_wins += 1
+    else:
+        print(Fore.RED + "Computer wins!" + Style.RESET_ALL)
+        computer_wins += 1
+    
+    print(f"Total wins: {player_name} - {player_wins}, Computer - {computer_wins}")
+    
     while True:
         choice = input("Do you want to play again? (yes/no): ").strip().lower()
         if choice == 'yes':
-            return True
+            return True, player_wins, computer_wins
         elif choice == 'no':
             print("Thanks for playing!")
-            return False
+            return False, player_wins, computer_wins
         else:
             print("Invalid input. Please enter 'yes' or 'no'.")
 
 def main():
     """Main loop for player vs computer."""
-    display_rules()  # Display the game rules at the start
-    player_name = get_user_name()  # Get the player's name
-    computer_name = "Computer"  # Computer's name
-
-    games_won_player = 0
-    games_won_computer = 0
-
+    player_name = get_user_name()  # Get player's name
+    computer_wins = 0
+    player_wins = 0
+    
     while True:
+        display_rules()  # Display the game rules at the start
         size = get_grid_size()  # Get the grid size from the user
         player_grid = initialize_grid(size)  # Initialize player grid
         computer_grid = initialize_grid(size)  # Initialize computer grid
@@ -155,7 +161,7 @@ def main():
             while not random_ship_placement(computer_grid):
                 pass
 
-        # Display the player's grid initially
+        # Display the initial grid with ships visible for the player
         print(f"{player_name}'s Grid:")
         print_grid(player_grid, show_ships=True, title=f"{player_name}'s Grid")
 
@@ -164,27 +170,24 @@ def main():
             x, y = get_user_guess(size, player_guesses)  # Get player guess
             hit = computer_grid[x][y] == 'S'  # Check if hit
             update_grid(computer_grid, x, y, hit)  # Update computer grid
-            print_grid(computer_grid, show_ships=False, title=f"{computer_name}'s Grid")  # Display computer's grid after player's move
+            print_grid(computer_grid, show_ships=False, title="Computer Grid")  # Display grid without ships
             display_remaining_ships(computer_grid)  # Display remaining ships for computer grid
             if check_victory(computer_grid):  # Check if player wins
-                print(Fore.GREEN + f"{player_name} wins!" + Style.RESET_ALL)
-                games_won_player += 1
+                winner = player_name
                 break
 
-            print(Fore.YELLOW + f"{computer_name}'s turn:" + Style.RESET_ALL)
+            print(Fore.YELLOW + "Computer's turn:" + Style.RESET_ALL)
             x, y = get_computer_guess(size, computer_guesses)  # Get computer guess
             hit = player_grid[x][y] == 'S'  # Check if hit
             update_grid(player_grid, x, y, hit)  # Update player grid
-            print_grid(player_grid, show_ships=False, title=f"{player_name}'s Grid")  # Display player's grid
+            print_grid(player_grid, show_ships=True, title=f"{player_name}'s Grid")  # Display grid with ships
             display_remaining_ships(player_grid)  # Display remaining ships for player grid
             if check_victory(player_grid):  # Check if computer wins
-                print(Fore.RED + f"{computer_name} wins!" + Style.RESET_ALL)
-                games_won_computer += 1
+                winner = "Computer"
                 break
-
-        print(f"\nTotal wins: {player_name} - {games_won_player}, {computer_name} - {games_won_computer}")
-
-        if not handle_game_over(player_name):
+        
+        play_again, player_wins, computer_wins = handle_game_over(winner, player_name, computer_wins, player_wins)
+        if not play_again:
             break
 
 if __name__ == "__main__":
