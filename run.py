@@ -37,6 +37,7 @@ def display_rules():
     print("Take turns guessing coordinates to sink enemy ships.")
     print("The grid size will be between 5 and 10.")
     print("Enter coordinates as 'x y' where x is the row and y is the column.")
+    print("Type 'quit' at any time to exit the game.")
 
 def get_grid_size():
     """Prompt the user to enter the grid size"""
@@ -87,13 +88,16 @@ def get_user_guess(size, previous_guesses):
     """Prompt user for coordinates and ensure they are not duplicates"""
     while True:
         try:
-            x, y = map(int, input(f"Enter your guess (row and column) separated by a space (e.g., 3 4): ").split())
+            input_str = input(f"Enter your guess (row and column) separated by a space (e.g., 3 4): ")
+            if input_str.lower() == 'quit':
+                return None, None, True
+            x, y = map(int, input_str.split())
             if (x, y) in previous_guesses:
                 print("You already guessed that position. Try a different one.")
                 continue
             if 0 <= x < size and 0 <= y < size:
                 previous_guesses.add((x, y))
-                return x, y
+                return x, y, False
             else:
                 print(f"Coordinates must be between 0 and {size-1}.")
         except ValueError:
@@ -167,7 +171,10 @@ def main():
 
         while True:
             print(Fore.MAGENTA + f"{player_name}'s turn:" + Style.RESET_ALL)
-            x, y = get_user_guess(size, player_guesses)  # Get player guess
+            x, y, quit_game = get_user_guess(size, player_guesses)  # Get player guess
+            if quit_game:
+                print("Game has been quit.")
+                return
             hit = computer_grid[x][y] == 'S'  # Check if hit
             update_grid(computer_grid, x, y, hit)  # Update computer grid
             print_grid(computer_grid, show_ships=False, title="Computer Grid")  # Display grid without ships
