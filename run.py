@@ -54,9 +54,16 @@ def place_ship(grid, start_x, start_y, length, direction):
         else:
             print("Ship placement out of bounds or overlap detected.")
 
-# Testing ship placement
+# battleships.py
+
+def count_ships(grid):
+    """Count the number of ships on the grid."""
+    return sum(row.count('S') for row in grid)
+
+# Testing ship count
 if __name__ == "__main__":
     size = get_grid_size()
     grid = initialize_grid(size)
     place_ship(grid, 1, 1, 3, 'H')
-    print_grid(grid)
+    print(f"Total ships on grid: {count_ships(grid)}")
+
