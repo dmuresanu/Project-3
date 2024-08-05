@@ -68,8 +68,14 @@ def get_user_guess(size):
         except ValueError:
             print("Invalid input. Please enter two integers.")
 
-# Testing user guess input
+import random
+
+def get_computer_guess(size):
+    """Generate random coordinates for computer's guess."""
+    return random.randint(0, size - 1), random.randint(0, size - 1)
+
+# Testing computer guess generation
 if __name__ == "__main__":
     size = get_grid_size()
-    print(f"User guess: {get_user_guess(size)}")
+    print(f"Computer guess: {get_computer_guess(size)}")
 
