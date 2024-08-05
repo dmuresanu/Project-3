@@ -87,6 +87,9 @@ def check_victory(grid):
 
 def game_loop(grid):
     """Main game loop for player vs computer."""
+    user_ships_remaining = count_ships(grid)
+    comp_ships_remaining = count_ships(grid)
+    
     while True:
         print("Current Grid:")
         print_grid(grid)
@@ -94,10 +97,12 @@ def game_loop(grid):
         if grid[x][y] == 'S':
             update_grid(grid, x, y, True)
             print("Hit!")
+            user_ships_remaining -= 1
         else:
             update_grid(grid, x, y, False)
             print("Miss!")
-        if check_victory(grid):
+        
+        if user_ships_remaining == 0:
             print("Congratulations! You win!")
             break
         
@@ -105,11 +110,16 @@ def game_loop(grid):
         if grid[comp_x][comp_y] == 'S':
             update_grid(grid, comp_x, comp_y, True)
             print("Computer hit!")
+            comp_ships_remaining -= 1
         else:
             update_grid(grid, comp_x, comp_y, False)
             print("Computer missed!")
+        
+        if comp_ships_remaining == 0:
+            print("Computer wins!")
+            break
 
-# Testing main game loop
+# Testing player victory check in game loop
 if __name__ == "__main__":
     size = get_grid_size()
     grid = initialize_grid(size)
