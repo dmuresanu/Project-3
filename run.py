@@ -49,58 +49,23 @@ def get_grid_size():
         except ValueError:
             print("Invalid input. Please enter an integer.")
 
-def place_ship(grid, start_x, start_y, length, direction):
-    """Place ship on the grid."""
-    if direction == 'H':
-        if start_y + length <= len(grid[0]) and all(grid[start_x][start_y + i] == ' ' for i in range(length)):
-            for i in range(length):
-                grid[start_x][start_y + i] = 'S'
-            return True
-        else:
-            print("Ship placement overlaps or is out of bounds.")
-            return False
-    elif direction == 'V':
-        if start_x + length <= len(grid) and all(grid[start_x + i][start_y] == ' ' for i in range(length)):
-            for i in range(length):
-                grid[start_x + i][start_y] = 'S'
-            return True
-        else:
-            print("Ship placement overlaps or is out of bounds.")
-            return False
-    print("Invalid direction. Use 'H' for horizontal or 'V' for vertical.")
-    return False
-
-def validate_ship_placement(grid, start_x, start_y, length, direction):
-    """Validate if a ship can be placed at the given position."""
-    if direction == 'H':
-        if start_y + length > len(grid[0]):
-            return False
-        if any(grid[start_x][start_y + i] != ' ' for i in range(length)):
-            return False
-    elif direction == 'V':
-        if start_x + length > len(grid):
-            return False
-        if any(grid[start_x + i][start_y] != ' ' for i in range(length)):
-            return False
-    return True
-
-def random_ship_placement(grid, length):
-    """Randomly place a ship of given length on the grid"""
-    size = len(grid)
-    direction = random.choice(['H', 'V'])
-    if direction == 'H':
-        x = random.randint(0, size - 1)
-        y = random.randint(0, size - length)
-    else:
-        x = random.randint(0, size - length)
-        y = random.randint(0, size - 1)
-    if validate_ship_placement(grid, x, y, length, direction):
-        place_ship(grid, x, y, length, direction)
+def place_ship(grid, x, y):
+    """Place a ship of length 1 on the grid."""
+    if grid[x][y] == ' ':
+        grid[x][y] = 'S'
         return True
-    return False
+    else:
+        print("Ship placement overlaps or is out of bounds.")
+        return False
+
+def random_ship_placement(grid):
+    """Randomly place a ship of length 1 on the grid."""
+    size = len(grid)
+    x, y = random.randint(0, size - 1), random.randint(0, size - 1)
+    return place_ship(grid, x, y)
 
 def count_ships(grid):
-    """Count the number of ships in the grid"""
+    """Count the number of ships in the grid."""
     return sum(cell == 'S' for row in grid for cell in row)
 
 def display_remaining_ships(grid):
@@ -109,7 +74,7 @@ def display_remaining_ships(grid):
     print(Fore.CYAN + f"Remaining ships: {num_ships}" + Style.RESET_ALL)
 
 def get_user_guess(size):
-    """Prompt user for coordinates"""
+    """Prompt user for coordinates."""
     while True:
         try:
             x, y = map(int, input(f"Enter coordinates (0-{size-1})(x y): ").split())
@@ -121,57 +86,60 @@ def get_user_guess(size):
             print("Invalid input. Please enter two integers separated by a space.")
 
 def get_computer_guess(size):
-    """Generate random coordinates for computer guess"""
+    """Generate random coordinates for computer guess."""
     return random.randint(0, size - 1), random.randint(0, size - 1)
 
 def update_grid(grid, x, y, hit):
-    """Update the grid with hits or misses"""
+    """Update the grid with hits or misses."""
     if hit:
         grid[x][y] = 'H'
     else:
         grid[x][y] = 'M'
 
 def check_victory(grid):
-    """Check if all ships have been hit"""
+    """Check if all ships have been hit."""
     return all(cell != 'S' for row in grid for cell in row)
 
 def main():
-    """Main loop for player vs computer"""
-    display_rules() # Display the game rules at the start
-    size = get_grid_size() # Get the grid size from the user
-    player_grid = initialize_grid(size) # Initialize player grid
-    computer_grid = initialize_grid(size) # Initialize computer grid
-    place_ship(player_grid, 0, 0, 3, 'H') # Example placement for player
-    place_ship(computer_grid, 1, 1, 3, 'V') # Example placement for computer
+    """Main loop for player vs computer."""
+    display_rules()  # Display the game rules at the start
+    size = get_grid_size()  # Get the grid size from the user
+    player_grid = initialize_grid(size)  # Initialize player grid
+    computer_grid = initialize_grid(size)  # Initialize computer grid
 
     # Place ships randomly on player and computer grids
-    ship_lenghts = [3, 2, 1]
-    for lenght in ship_lenghts:
-        while not random_ship_placement(player_grid, lenght):
+    for _ in range(3):  # Adjust the number of ships as needed
+        while not random_ship_placement(player_grid):
             pass
-        while not random_ship_placement(computer_grid, lenght):
+        while not random_ship_placement(computer_grid):
             pass
+
+    # Display the initial grids with ships visible before player makes a move
+    print("Player's Grid:")
+    print_grid(player_grid, show_ships=True, title="Player's Grid")
+    print("\nComputer's Grid:")
+    print_grid(computer_grid, show_ships=True, title="Computer's Grid")
 
     while True:
         print("Player's turn:")
-        x, y = get_user_guess(size) # Get player guess
-        hit = computer_grid[x][y] == 'S' # Check if hit
-        update_grid(computer_grid, x, y, hit) # Update computer grid
-        print_grid(computer_grid) # Display grid for testing
-        display_remaining_ships(computer_grid) # Display remaining ships for computer grid
-        if check_victory(computer_grid): # Check if player wins
+        x, y = get_user_guess(size)  # Get player guess
+        hit = computer_grid[x][y] == 'S'  # Check if hit
+        update_grid(computer_grid, x, y, hit)  # Update computer grid
+        print_grid(computer_grid)  # Display grid for testing
+        display_remaining_ships(computer_grid)  # Display remaining ships for computer grid
+        if check_victory(computer_grid):  # Check if player wins
             print("Player wins!")
             break
 
         print("Computer's turn:")
-        x, y = get_computer_guess(size) # Get computer guess
-        hit = player_grid[x][y] == 'S' # Check if hit
-        update_grid(player_grid, x, y, hit) # Update player grid
-        print_grid(player_grid) # Display grid for testing
-        display_remaining_ships(player_grid) # Display remaining ships for player grid
-        if check_victory(player_grid): # Check if computer wins
+        x, y = get_computer_guess(size)  # Get computer guess
+        hit = player_grid[x][y] == 'S'  # Check if hit
+        update_grid(player_grid, x, y, hit)  # Update player grid
+        print_grid(player_grid)  # Display grid for testing
+        display_remaining_ships(player_grid)  # Display remaining ships for player grid
+        if check_victory(player_grid):  # Check if computer wins
             print("Computer wins!")
             break
 
 if __name__ == "__main__":
-    main() # Start game
+    main()  # Start game
