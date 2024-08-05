@@ -87,7 +87,7 @@ def get_user_guess(size, previous_guesses):
     """Prompt user for coordinates and ensure they are not duplicates"""
     while True:
         try:
-            x, y = map(int, input(f"Enter coordinates (0-{size-1})(x y): ").split())
+            x, y = map(int, input(f"Enter your guess (row column, e.g., 3 4): ").split())
             if (x, y) in previous_guesses:
                 print("You already guessed that position. Try a different one.")
                 continue
