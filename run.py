@@ -36,8 +36,6 @@ def get_grid_size():
         except ValueError:
             print("Invalid input. Please enter a positive integer.")
 
-# battleships.py
-
 def place_ship(grid, start_x, start_y, length, direction):
     """Place a ship on the grid if placement is valid."""
     size = len(grid)
@@ -54,16 +52,24 @@ def place_ship(grid, start_x, start_y, length, direction):
         else:
             print("Ship placement out of bounds or overlap detected.")
 
-# battleships.py
-
 def count_ships(grid):
     """Count the number of ships on the grid."""
     return sum(row.count('S') for row in grid)
 
-# Testing ship count
+def get_user_guess(size):
+    """Prompt user for coordinates."""
+    while True:
+        try:
+            x, y = map(int, input(f"Enter coordinates (0-{size-1}) (x y): ").split())
+            if 0 <= x < size and 0 <= y < size:
+                return x, y
+            else:
+                print(f"Coordinates must be between 0 and {size-1}.")
+        except ValueError:
+            print("Invalid input. Please enter two integers.")
+
+# Testing user guess input
 if __name__ == "__main__":
     size = get_grid_size()
-    grid = initialize_grid(size)
-    place_ship(grid, 1, 1, 3, 'H')
-    print(f"Total ships on grid: {count_ships(grid)}")
+    print(f"User guess: {get_user_guess(size)}")
 
