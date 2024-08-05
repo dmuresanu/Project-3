@@ -4,6 +4,10 @@ from colorama import Fore, Style, init
 # Initialize colorama to enable colored text output
 init()
 
+# Global variables to keep track of wins
+player_wins = 0
+computer_wins = 0
+
 def initialize_grid(size):
     """Initialize the game grid"""
     return [[' ' for _ in range(size)] for _ in range(size)]
@@ -109,7 +113,16 @@ def check_victory(grid):
 
 def handle_game_over(winner):
     """Handle the end of the game and offer restart or exit options."""
+    global player_wins, computer_wins
+    
+    if winner == "Player":
+        player_wins += 1
+    elif winner == "Computer":
+        computer_wins += 1
+
     print(f"\n{winner} wins!")
+    print(f"Current Score - Player: {player_wins}, Computer: {computer_wins}")
+    
     while True:
         choice = input("Do you want to play again? (yes/no): ").strip().lower()
         if choice == 'yes':
@@ -151,7 +164,6 @@ def play_game():
         print_grid(computer_grid, show_ships=False, title="Computer Grid")  # Display grid for testing
         display_remaining_ships(computer_grid)  # Display remaining ships for computer grid
         if check_victory(computer_grid):  # Check if player wins
-            print(Fore.GREEN + "Player wins!" + Style.RESET_ALL)
             return "Player"
 
         print(Fore.YELLOW + "Computer's turn:" + Style.RESET_ALL)
@@ -161,7 +173,6 @@ def play_game():
         print_grid(player_grid, show_ships=True, title="Player Grid")  # Display grid for testing
         display_remaining_ships(player_grid)  # Display remaining ships for player grid
         if check_victory(player_grid):  # Check if computer wins
-            print(Fore.RED + "Computer wins!" + Style.RESET_ALL)
             return "Computer"
 
 def main():
