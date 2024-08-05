@@ -64,7 +64,21 @@ def place_ship(grid, start_x, start_y, lenght, direction):
              print("Ship placement overlaps or is out of bounds.")
              return False      
              print("Invalid direction. Use 'H' for horizontal or 'V' for vertical.")
-             return False               
+             return False 
+
+def validate_ship_placement(grid, start_x, start_y, lenght, direction):   
+    """Validate if a ship can be placed at the given position.""" 
+    if direction == 'H':  
+        if start_y + lenght > len(grid[0]):
+            return False
+        if any(grid[start_x][start_y + i] != ' ' for i in range(lenght)):
+            return False  
+    elif direction == 'V':     
+        if start_x + lenght > len(grid):
+            return False
+        if any(grid[start_x + i][start_y] != ' ' for i in range(lenght)):
+            return False
+    return False 
 
 def count_ships(grid):
     """Count the number of ships in the grid"""
