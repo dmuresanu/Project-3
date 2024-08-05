@@ -4,25 +4,44 @@ def initialize_grid(size):
     """Initialize the game grid"""
     return [[' ' for _ in range(size)] for _ in range(size)]
 
-def print_grid(grid):
-    """Print the game grid"""
-    for row in grid:
-        print(' '.join(row))
+def print_grid(grid, show_ships=False, title=""):
+    """Print the game grid. Optionally show ships for the user grid."""
+    size = len(grid)
+    if title:
+        print(f"\n{title}")
+    header = "   " + " ".join([f"{i}" for i in range(size)])
+    print(header)
+    for i, row in enumerate(grid):
+        row_display = []
+        for cell in row:
+            if cell == 'S' and not show_ships:
+                row_display.append(' ') 
+            elif cell == 'S':
+                row_display.append('S')
+            elif cell == 'H':  
+                row_display.append('H') 
+            elif cell == 'M':
+                row_display.append('M') 
+            else:  
+                row_display.append(cell)  
+        print(f"{i:2} " + " ".join(row_display))                           
 
 def display_rules():
     """Display game rules to the player"""
-    print("Welcome to Battleships!")
+    print("\nWelcome to Battleships!")
     print("Take turns guessing coordinates to sink enemy ships.")
+    print("The grid size will be between 5 and 10.")
+    print("Enter coordinates as 'x y' where x is the row and y is the column.")
 
 def get_grid_size():
     """Prompt the user to enter the grid size"""
     while True:
         try:
             size = int(input("Enter grid size: ")) 
-            if size > 0:
+            if 5 <= size <= 10:
                 return size
             else: 
-                    print("Grid size must be a positive interger.") 
+                    print("Grid size must be between 5 and 10.") 
         except ValueError:
             print("Invalid input. Please enter an interger.")              
 
