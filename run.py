@@ -144,6 +144,14 @@ def main():
     place_ship(player_grid, 0, 0, 3, 'H') # Example placement for player
     place_ship(computer_grid, 1, 1, 3, 'V') # Example placement for computer
 
+    # Place ships randomly on player and computer grids
+    ship_lenghts = [3, 2, 1]
+    for lenght in ship_lenghts:
+        while not random_ship_placement(player_grid, lenght):
+            pass
+        while not random_ship_placement(computer_grid, lenght):
+            pass
+
     while True:
         print("Player's turn:")
         x, y = get_user_guess(size) # Get player guess
