@@ -75,14 +75,13 @@ def display_remaining_ships(grid):
     print(Fore.CYAN + f"Remaining ships: {num_ships}" + Style.RESET_ALL)
 
 def get_user_name():
-    """Prompt the user to enter their name and validate it."""
-    name_pattern = re.compile(r"^[A-Za-z ]{1,20}$")
+    """Prompt user to enter their name with validation."""
     while True:
         name = input("Enter your name: ").strip()
-        if name_pattern.match(name):
+        if re.match(r'^[A-Za-z ]{1,20}$', name):
             return name
         else:
-            print("Invalid name. Please enter a name with 1-20 alphabetic characters and spaces only.")
+            print("Invalid input. Please enter 1-20 alphabetic characters and spaces only.")
 
 def get_user_guess(size, previous_guesses):
     """Prompt user for coordinates and ensure they are not duplicates"""
@@ -136,7 +135,7 @@ def main():
     display_rules()  # Display the game rules at the start
     player_name = get_user_name()  # Get the player's name
     computer_name = "Computer"  # Computer's name
-    
+
     games_won_player = 0
     games_won_computer = 0
 
@@ -156,18 +155,16 @@ def main():
             while not random_ship_placement(computer_grid):
                 pass
 
-        # Display the initial grids with ships visible before player makes a move
+        # Display the player's grid initially
         print(f"{player_name}'s Grid:")
         print_grid(player_grid, show_ships=True, title=f"{player_name}'s Grid")
-        print(f"\n{computer_name}'s Grid:")
-        print_grid(computer_grid, show_ships=True, title=f"{computer_name}'s Grid")
 
         while True:
             print(Fore.MAGENTA + f"{player_name}'s turn:" + Style.RESET_ALL)
             x, y = get_user_guess(size, player_guesses)  # Get player guess
             hit = computer_grid[x][y] == 'S'  # Check if hit
             update_grid(computer_grid, x, y, hit)  # Update computer grid
-            print_grid(computer_grid, show_ships=False, title=f"{computer_name}'s Grid")  # Display grid for testing
+            print_grid(computer_grid, show_ships=False, title=f"{computer_name}'s Grid")  # Display computer's grid after player's move
             display_remaining_ships(computer_grid)  # Display remaining ships for computer grid
             if check_victory(computer_grid):  # Check if player wins
                 print(Fore.GREEN + f"{player_name} wins!" + Style.RESET_ALL)
@@ -178,7 +175,7 @@ def main():
             x, y = get_computer_guess(size, computer_guesses)  # Get computer guess
             hit = player_grid[x][y] == 'S'  # Check if hit
             update_grid(player_grid, x, y, hit)  # Update player grid
-            print_grid(player_grid, show_ships=True, title=f"{player_name}'s Grid")  # Display grid for testing
+            print_grid(player_grid, show_ships=False, title=f"{player_name}'s Grid")  # Display player's grid
             display_remaining_ships(player_grid)  # Display remaining ships for player grid
             if check_victory(player_grid):  # Check if computer wins
                 print(Fore.RED + f"{computer_name} wins!" + Style.RESET_ALL)
