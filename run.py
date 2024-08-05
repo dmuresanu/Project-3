@@ -74,8 +74,19 @@ def get_computer_guess(size):
     """Generate random coordinates for computer's guess."""
     return random.randint(0, size - 1), random.randint(0, size - 1)
 
-# Testing computer guess generation
+def update_grid(grid, x, y, hit):
+    """Update the grid with hit or miss."""
+    if hit:
+        grid[x][y] = 'H'
+    else:
+        grid[x][y] = 'M'
+
+# Testing grid update
 if __name__ == "__main__":
     size = get_grid_size()
-    print(f"Computer guess: {get_computer_guess(size)}")
+    grid = initialize_grid(size)
+    place_ship(grid, 1, 1, 3, 'H')
+    update_grid(grid, 1, 1, True)
+    update_grid(grid, 2, 2, False)
+    print_grid(grid)
 
