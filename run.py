@@ -80,6 +80,21 @@ def validate_ship_placement(grid, start_x, start_y, lenght, direction):
             return False
     return False 
 
+def random_ship_placement(grid, lenght):   
+    """Randomly place a ship of given lenght on the grid"""
+    size = len(grid)
+    direction = random.choice(['H', 'V'])
+    if direction == 'H':
+        x = random.randint(0, size - 1)
+        y = random.randint(0, size - lenght)
+    else:
+        x = random.randint(0, size - lenght)
+        y = random.randint(0, size - 1)
+    if validate_ship_placement(grid, x, y, lenght, direction):
+        place_ship(grid, x, y, lenght, direction)
+        return True
+    return False
+
 def count_ships(grid):
     """Count the number of ships in the grid"""
     return sum(cell == 'S' for row in grid for cell in row) 
