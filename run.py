@@ -12,8 +12,16 @@ def print_grid(grid, show_ships=False):
         print(row)
     print()  # Add newline for better readability
 
-# Testing the grid display
+def display_rules():
+    rules = (
+        "Welcome to Battleships!\n"
+        "1. The game is played on the grid.\n"
+        "2. Take turns to guess the location of enemy ships.\n"
+        "3. First to sink all ships wins.\n"
+    )
+    print(rules)
+
+
+# Testing rules display
 if __name__ == "__main__":
-    size = 5
-    grid = initialize_grid(size)
-    print_grid(grid, show_ships=False)
+    display_rules()
