@@ -107,9 +107,21 @@ def check_victory(grid):
     """Check if all ships have been hit."""
     return all(cell != 'S' for row in grid for cell in row)
 
-def main():
-    """Main loop for player vs computer."""
-    display_rules()  # Display the game rules at the start
+def handle_game_over(winner):
+    """Handle the end of the game and offer restart or exit options."""
+    print(f"\n{winner} wins!")
+    while True:
+        choice = input("Do you want to play again? (yes/no): ").strip().lower()
+        if choice == 'yes':
+            return True
+        elif choice == 'no':
+            print("Thanks for playing!")
+            return False
+        else:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+
+def play_game():
+    """Play a single game of Battleships."""
     size = get_grid_size()  # Get the grid size from the user
     player_grid = initialize_grid(size)  # Initialize player grid
     computer_grid = initialize_grid(size)  # Initialize computer grid
@@ -140,7 +152,7 @@ def main():
         display_remaining_ships(computer_grid)  # Display remaining ships for computer grid
         if check_victory(computer_grid):  # Check if player wins
             print(Fore.GREEN + "Player wins!" + Style.RESET_ALL)
-            break
+            return "Player"
 
         print(Fore.YELLOW + "Computer's turn:" + Style.RESET_ALL)
         x, y = get_computer_guess(size, computer_guesses)  # Get computer guess
@@ -150,6 +162,14 @@ def main():
         display_remaining_ships(player_grid)  # Display remaining ships for player grid
         if check_victory(player_grid):  # Check if computer wins
             print(Fore.RED + "Computer wins!" + Style.RESET_ALL)
+            return "Computer"
+
+def main():
+    """Main loop for player vs computer."""
+    display_rules()  # Display the game rules at the start
+    while True:
+        winner = play_game()
+        if not handle_game_over(winner):
             break
 
 if __name__ == "__main__":
