@@ -85,12 +85,34 @@ def check_victory(grid):
     """Check if all ships have been hit."""
     return all(cell != 'S' for row in grid for cell in row)
 
-# Testing victory check
+def game_loop(grid):
+    """Main game loop for player vs computer."""
+    while True:
+        print("Current Grid:")
+        print_grid(grid)
+        x, y = get_user_guess(len(grid))
+        if grid[x][y] == 'S':
+            update_grid(grid, x, y, True)
+            print("Hit!")
+        else:
+            update_grid(grid, x, y, False)
+            print("Miss!")
+        if check_victory(grid):
+            print("Congratulations! You win!")
+            break
+        
+        comp_x, comp_y = get_computer_guess(len(grid))
+        if grid[comp_x][comp_y] == 'S':
+            update_grid(grid, comp_x, comp_y, True)
+            print("Computer hit!")
+        else:
+            update_grid(grid, comp_x, comp_y, False)
+            print("Computer missed!")
+
+# Testing main game loop
 if __name__ == "__main__":
     size = get_grid_size()
     grid = initialize_grid(size)
     place_ship(grid, 1, 1, 3, 'H')
-    update_grid(grid, 1, 1, True)
-    update_grid(grid, 2, 2, True)
-    print(f"Victory Status: {check_victory(grid)}")
+    game_loop(grid)
 
