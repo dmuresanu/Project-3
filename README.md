@@ -1,32 +1,117 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# Battleships Game
 
-Welcome,
+![Battleships logo](/images/Battleships.png)
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **May 14, 2024**
+## Purpose
+This console-based Battleships game allows players to take turns guessing coordinates to sink enemy ships. The game is designed for single-player mode, where the user competes against the computer. It is a fun and strategic game that tests your prediction and planning skills.
 
-## Reminders
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+## Index – Table of Contents
+* [User Experience (UX)](#user-experience-ux)
+* [Target Audience](#target-audience)
+* [Features](#features)
+* [Design](#design)
+* [Technologies Used](#technologies-used)
+* [Testing](#testing)
+* [Deployment](#deployment)
+* [Credits](#credits)
 
-## Creating the Heroku app
+## User Experience (UX)
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+The Battleships game is designed to provide an intuitive and enjoyable experience:
 
-1. `heroku/python`
-2. `heroku/nodejs`
+#### Intuitive Gameplay:
+- Easy-to-understand rules and controls.
+- Simple input method for guessing coordinates.
+- Clear feedback on hits and misses.
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+#### Visual Feedback:
+- Colored text for different game states (e.g., hits, misses, ships).
+- Real-time updates on remaining ships.
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+#### Structured Layout:
+- Grids are displayed with headers and borders for clarity.
+- Scores and game status are prominently shown.
 
-Connect your GitHub repository and deploy as normal.
+#### Consistent Styling:
+- Uniform style for all game elements.
+- Consistent color scheme for different game states.
 
-## Constraints
+#### Accessibility:
+- High contrast colors for better visibility.
+- Clear instructions and prompts.
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+These UX considerations ensure a smooth, accessible, and engaging experience for all users.
 
----
+## Target Audience
 
-Happy coding!
+The target audience for this game includes:
+
+- **Casual Gamers**: Individuals looking for a simple yet engaging game to pass the time.
+- **Strategy Enthusiasts**: Players who enjoy games that require planning and foresight.
+- **All Ages**: Suitable for both young and old gamers who appreciate classic games.
+- **Retro Game Fans**: Individuals who enjoy traditional games with a modern twist.
+
+This game aims to provide an engaging and thought-provoking experience reminiscent of classic board games.
+
+## Features
+- Initialize a game grid of customizable size (5-10).
+- Player vs. Computer mode.
+- Random ship placement for both player and computer.
+- Turn-based guessing of coordinates.
+- Real-time feedback on hits, misses, and remaining ships.
+- Option to quit the game at any time.
+
+## Design
+
+#### Layout:
+- Grid Display: Rows and columns labeled for easy reference.
+- Visual Indicators: Clear symbols and colors for hits, misses, and ships.
+
+#### Styling:
+- Consistent Color Scheme: Different colors for hits, misses, and ships.
+- Structured Grid: Clearly defined borders and headers for grids.
+
+#### Accessibility:
+- High Contrast Colors: Ensures visibility for all users.
+- Simple Text Prompts: Clear instructions and feedback for user actions.
+
+#### Interactivity:
+- Command-line Inputs: Simple and straightforward input method for coordinates.
+- Real-time Feedback: Immediate visual response for user actions.
+
+## Technologies Used
+
+### Languages Used
+- Python
+
+### Libraries Used
+- [Colorama](https://pypi.org/project/colorama/): Used for colored text output in the console.
+
+## Testing
+
+### Code Testing
+- **Manual Testing**: Extensive manual testing was performed to ensure all game features function as intended.
+  - Validated that the grid initializes correctly.
+  - Ensured random ship placement does not overlap.
+  - Verified that hits, misses, and ship counts update correctly.
+  - Tested user input validation for coordinate guessing.
+  - Checked game over conditions and restart functionality.
+
+### Bugs
+
+#### Fixed Bugs
+- **Ship Lengths**: Initially, ships of lengths 3, 2, and 1 were used, causing incorrect ship count reflections. This was fixed by using ships of length 1 only.
+
+![Ship Length Bug](/images/ships%20count%20bug.png)
+
+#### Unfixed Bugs
+- **None**: All known issues have been resolved.
+
+## Deployment
+
+### Steps to Deploy to Heroku
+1. Ensure you have Python and Git installed on your machine.
+2. Create a `requirements.txt` file with the necessary dependencies:
+   ```bash
+   pip freeze > requirements.txt
