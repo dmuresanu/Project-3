@@ -14,7 +14,6 @@ This console-based Battleships game allows players to take turns guessing coordi
 * [Technologies Used](#technologies-used)
 * [Testing](#testing)
 * [Deployment](#deployment)
-* [Credits](#credits)
 
 ## User Experience (UX)
 
