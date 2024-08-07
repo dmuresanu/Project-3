@@ -5,7 +5,6 @@
 ## Purpose
 This console-based Battleships game allows players to take turns guessing coordinates to sink enemy ships. The game is designed for single-player mode, where the user competes against the computer. It is a fun and strategic game that tests your prediction and planning skills.
 
-
 ## Index – Table of Contents
 * [User Experience (UX)](#user-experience-ux)
 * [Target Audience](#target-audience)
@@ -14,6 +13,7 @@ This console-based Battleships game allows players to take turns guessing coordi
 * [Technologies Used](#technologies-used)
 * [Testing](#testing)
 * [Deployment](#deployment)
+* [References and Inspirations](#references-and-inspirations)
 
 ## User Experience (UX)
 
@@ -105,7 +105,9 @@ This game aims to provide an engaging and thought-provoking experience reminisce
 ![Ship Length Bug](/images/ships%20count%20bug.png)
 
 #### Unfixed Bugs
-- **None**: All known issues have been resolved.
+- **Code Linter Warnings**: The Python code contains lines that exceed the 79-character limit as specified by PEP 8. Despite refactoring efforts, some lines still exceed this limit. The game functions correctly, but these warnings are acknowledged in the code linter results.
+
+![Code Linter Warnings](/images/Code%20Linter%20Warnings.png)
 
 ## Deployment
 
@@ -114,3 +116,16 @@ This game aims to provide an engaging and thought-provoking experience reminisce
 2. Create a `requirements.txt` file with the necessary dependencies:
    ```bash
    pip freeze > requirements.txt
+
+## References and Inspirations
+
+Here are some sources that influenced the development of this game and provided useful insights:
+
+- **Battleship Game Rules**: [Wikipedia - Battleship (game)](https://en.wikipedia.org/wiki/Battleship_(game))
+  - Provides an overview of the classic Battleships game rules and strategies.
+
+- **Colorama Documentation**: [Colorama - PyPI](https://pypi.org/project/colorama/)
+  - Documentation for the Colorama library used for colored text output.
+
+- **PEP 8 Style Guide**: [PEP 8 - Style Guide for Python Code](https://pep8.org/)
+  - Provides the style guidelines for Python code, including line length recommendations.
