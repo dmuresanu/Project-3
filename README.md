@@ -14,6 +14,7 @@ This application is a Python-based battleships style game. The game takes the us
 
 ## Index – Table of Contents
 * [Pre-Project](#pre-project-planning)
+* [Game Walkthrough](#game-walkthrough)
 * [User Experience (UX)](#user-experience-ux)
 * [Target Audience](#target-audience)
 * [Design](#design)
@@ -68,6 +69,71 @@ When the user starts the game, they are prompted to enter their name. After that
 **End of Game**
 - The winner is announced based on who sinks all of the opponent's ships first.
 - The player is then prompted to either play again or exit.
+
+
+## Game Walkthrough
+
+In this section, I will present a step-by-step walkthrough of the Battleships game, from the initial setup to the final game outcome, accompanied by screenshots to illustrate the process.
+
+### Game Overview
+
+The following table provides a visual representation of the gameplay, including key stages such as setup, gameplay turns, and the end of the game.
+
+| **Stage**                    | **Description**                                                                                                                                   | **Screenshot**                    |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| **1. Game Start**            | The game begins by asking the player for their name, followed by displaying the rules and prompting the player to select the grid size.             | ![Game Start](/images/Game%20Start.png)  |
+| **2. Player's Grid Setup**   | The player's grid is initialized, and ships are placed randomly on the grid. The player can see their ships on their grid.                         | ![Player Grid](/images/Player's%20Grid%20Setup.png)  |
+| **3. Computer's Grid Setup** | The computer's grid is initialized with ships randomly placed. The player cannot see the computer's ships.                                         | ![Computer Grid](/images/Computer%20grid.png) |
+| **4. Player's Turn**         | The player is prompted to enter a guess by specifying the coordinates (row and column). The game checks if it's a hit or miss.                      | ![Player Turn](/images/Player's%20turn.png) |
+| **5. Computer's Turn**       | The computer takes its turn, guessing coordinates to try and hit the player's ships. The result (hit or miss) is updated on the player's grid.      | ![Computer Turn](/images/Computer's%20turn.png) |
+| **6. Gameplay Progress**     | The game continues with alternating turns until one player sinks all the opponent's ships. The number of remaining ships is displayed after each turn.| ![Gameplay](/images/Gameplay%20Progress.png) |
+| **7. Game End**              | The game concludes when either the player or the computer sinks all of the opponent's ships. The winner is announced, and the player can choose to play again or exit. | ![Game End](/images/Game%20End.png) |
+
+---
+
+### Detailed Walkthrough
+
+#### 1. Game Start
+
+- The player is prompted to enter their name. 
+- The game rules are displayed, explaining how to play.
+- The player is asked to select the grid size (between 5x5 and 10x10).
+
+#### 2. Player's Grid Setup
+
+- The player's grid is initialized, and ships are placed randomly on the grid. The grid size is determined by the player's earlier choice.
+
+#### 3. Computer's Grid Setup
+
+- The computer's grid is also initialized with ships placed randomly. The player is not shown the location of the computer's ships.
+
+#### 4. Player's Turn
+
+- The player guesses the location of the computer's ships by entering coordinates (row and column).
+- The game indicates whether the guess was a hit or miss.
+
+#### 5. Computer's Turn
+
+- The computer guesses the player's ship location.
+- The result of the computer's guess is displayed on the player's grid.
+
+#### 6. Gameplay Progress
+
+- The game alternates between the player and the computer taking turns.
+- Each turn updates the respective grids, showing hits and misses.
+
+#### 7. Game End
+
+- The game ends when all ships on one side are sunk.
+- The winner is declared, and the player is given the option to play again or exit.
+
+---
+
+### Notes
+
+- All screenshots were captured during an actual gameplay session.
+- The colored text feedback (hits, misses) enhances the player's experience and provides clear visual indicators of progress.
+
 
 
 ## User Experience (UX)
