@@ -1,3 +1,13 @@
+"""
+This module contains the implementation of a Battleships game where the player
+competes against the computer to sink ships on a grid.
+
+The game allows a player to play against the computer
+ on a grid of size 5x5 to 10x10.
+The player must guess the location of the computer's ships, and the computer
+ will also try to guess the player's ship locations.
+"""
+
 import random
 import re
 from colorama import Fore, Style, init
@@ -12,7 +22,7 @@ def display_ship_ascii():
               __/___
         _____/______|
   _____/_____\\_______\\_____
- \\  BATTLESHIP     < < <    |
+ \\  BATTLESHIPS    < < <    |
 {Fore.BLUE}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{Style.RESET_ALL}
     """
     print(ship_art)
@@ -107,7 +117,7 @@ def get_user_name():
         if re.fullmatch(r'[A-Za-z ]{1,20}', name):
             return name
         else:
-            print("Enter a name with 1-20 letters or spaces only.")
+            print("Enter a name with 1-20 letters only.")
 
 
 def get_user_guess(size, previous_guesses):
@@ -186,7 +196,7 @@ def handle_game_over(winner, player_name, computer_wins, player_wins):
 
 
 def main():
-    """Main loop for player vs computer."""
+    """Run the main loop for player vs computer."""
     display_ship_ascii()  # Display the ship ASCII when the game starts
     player_name = get_user_name()
     computer_wins = 0
