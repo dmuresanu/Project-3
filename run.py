@@ -6,6 +6,18 @@ from colorama import Fore, Style, init
 init()
 
 
+def display_ship_ascii():
+    """Display a ship ASCII with blue water."""
+    ship_art = f"""
+              __/___
+        _____/______|
+  _____/_____\\_______\\_____
+ \\  BATTLESHIP     < < <    |
+{Fore.BLUE}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~{Style.RESET_ALL}
+    """
+    print(ship_art)
+
+
 def initialize_grid(size):
     """Initialize the game grid."""
     return [[' ' for _ in range(size)] for _ in range(size)]
@@ -175,6 +187,7 @@ def handle_game_over(winner, player_name, computer_wins, player_wins):
 
 def main():
     """Main loop for player vs computer."""
+    display_ship_ascii()  # Display the ship ASCII when the game starts
     player_name = get_user_name()
     computer_wins = 0
     player_wins = 0
@@ -215,7 +228,8 @@ def main():
             x, y = get_computer_guess(size, computer_guesses)
             hit = player_grid[x][y] == 'S'
             update_grid(player_grid, x, y, hit)
-            print_grid(player_grid, show_ships=True, title=f"{player_name}'s Grid")
+            print_grid(player_grid, show_ships=True,
+                       title=f"{player_name}'s Grid")
             display_remaining_ships(player_grid)
             if check_victory(player_grid):
                 winner = "Computer"

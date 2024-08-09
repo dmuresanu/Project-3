@@ -104,10 +104,14 @@ This game aims to provide an engaging and thought-provoking experience reminisce
 
 ![Ship Length Bug](/images/ships%20count%20bug.png)
 
-#### Unfixed Bugs
-- **Code Linter Warnings**: The Python code contains lines that exceed the 79-character limit as specified by PEP 8. Despite refactoring efforts, some lines still exceed this limit. The game functions correctly, but these warnings are acknowledged in the code linter results.
+- **Code Linter Warnings**: The Python code contained lines that exceed the 79-character limit as specified by PEP 8. The  code has been refactored to adhere to PEP 8 guidelines, specifically ensuring that all lines are within the 79-character limit. This improves readability and maintains consistency with Python's best practices.
 
 ![Code Linter Warnings](/images/Code%20Linter%20Warnings.png)
+
+![Code Linter no errors](/images/Code%20Linter%20no%20errors.png)
+
+#### Unfixed Bugs
+- **None**: All known issues have been resolved.
 
 ## Deployment
 
